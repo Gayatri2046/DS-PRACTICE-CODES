@@ -1,0 +1,92 @@
+PROBLEM STATEMENT 1
+/*Game Development:
+write a game development program that implements the Bubble
+Sort algorithm. The program will simulate a simple game where the player can input a
+set of numbers, and the numbers will be sorted using Bubble Sort to simulate a "level-up"
+scenario where the player's scores are sorted in ascending order.
+*/
+
+#include<iostream>
+using namespace std;
+int main(){
+	int n=5;
+	int player1[n];
+	int player2[n];
+	int temp=0;
+	for(int i=0;i<n;i++){
+		cout<<"enter the score for player 1:";
+		cin>>player1[i];
+		}
+	for(int i=0;i<n;i++){
+		cout<<"enter the score of player 2:";
+		cin>>player2[i];
+		}
+		//pass =i
+	for(int i=0;i<=n-1;i++){
+		for(int j=0;j<=n-i-1;j++){
+		if(player1[j]>player1[j+1])
+		{
+			temp = player1[j];
+			player1[j]=player1[j+1];
+			player1[j+1] =temp;
+			}	
+		}
+			for(int j=0;j<=n-1;j++){
+				cout<<" "<< player1[j];
+				}
+		cout<<"\n";
+		}
+		for(int i=0;i<=n-1;i++){
+		for(int j=0;j<=n-i-1;j++){
+		if(player2[j]>player2[j+1])
+		{
+			temp = player2[j];
+			player2[j]=player2[j+1];
+			player2[j+1] =temp;
+			}
+		}
+			for(int j=0;j<=n-1;j++){
+				cout<<" "<< player2[j];
+				}
+		cout<<"\n";
+		}
+	return 0;
+	}
+PROBLEM STATEMENT 2
+/*Organizing Cards in a Hand:
+Application: When playing card games, players often use an approach similar to insertion
+sort to  organize their cards. They pick one card at a time and insert it into the correct
+* position in their hand, maintaining a sorted sequence. Write a program that demonstrates
+* how to organize (sort) cards in a hand using insertion sort*/
+#include <iostream>
+#include <vector>
+using namespace std;
+int main() {
+    int n, temp = 0;
+    cout << "Enter number of cards: ";
+    cin >> n;
+    vector<int> cards(n); // safer than int cards[n]
+    // Input cards
+    cout << "Enter card numbers: ";
+    for (int i = 0; i < n; i++) {
+        cin >> cards[i];
+    }
+    for (int p = 0; p < n - 1; p++)  // Insertion sort
+ { // passes
+        int i = p + 1; // index of element to insert
+        int j = i - 1; // index of last sorted element
+        temp = cards[i]; // store value to insert
+        while (j >= 0 && temp < cards[j]) {
+            cards[j + 1] = cards[j];
+            j--;
+        }
+        cards[j + 1] = temp; // place value in correct position
+    }
+    cout << "\nCards in hand (sorted): ";  // Output
+    for (int i = 0; i < n; i++) {
+        cout << cards[i] << " ";
+    }
+    cout << endl;
+    return 0;
+}
+
