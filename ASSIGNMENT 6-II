@@ -1,0 +1,105 @@
+
+2.Printer Spooler (Circular Queue):
+In a multi-user environment, printers often use a circular queue to manage print jobs. Each print job is added to the queue, and the printer processes them in the order they arrive. Once a print job is completed, it moves out of the queue, and the next job is processed, efficiently managing the flow of print tasks. Implement the Printer Spooler system using a circular queue without using built-in queues.
+
+CODE:
+#include <iostream>
+using namespace std;
+
+class printer {
+    int size = 5;
+    int jobs[5];
+    int r = -1; // rear
+    int f = -1; // front
+public:
+    void Enqueue(int t);
+    int Dequeue();
+    int isEmpty();
+    int isFull();
+    void Display();
+};
+int printer::isEmpty() {
+    return (f == -1);
+}
+int printer::isFull() {
+    return ((r + 1) % size == f);
+}
+void printer::Enqueue(int t) {
+    if (isFull()) {
+        cout << "\nPrinter queue is full. Cannot add new job.";
+    } else {
+        if (isEmpty()) {
+            f = 0;
+            r = 0;
+        } else {
+            r = (r + 1) % size;
+        }
+        jobs[r] = t;
+        cout << "Print Job " << t << " is added to the queue.";
+    }
+}
+int printer::Dequeue() {
+    if (isEmpty()) {
+        cout << "\nPrinter queue is empty. No jobs to process.";
+        return -1;
+    } else {
+        int x = jobs[f];
+        if (f == r) {
+            // only one job left
+            f = -1;
+            r = -1;
+        } else {
+            f = (f + 1) % size;
+        }
+        cout << "\nPrint Job " << x << " is processed.";
+        return x;
+    }
+}
+void printer::Display() {
+    if (isEmpty()) {
+        cout << "\nNo pending print jobs.";
+    } else {
+        cout << "\nCurrent Print Jobs in Queue: ";
+        int i = f;
+        while (true) {
+            cout << jobs[i] << " ";
+            if (i == r)
+                break;
+            i = (i + 1) % size;
+        }
+        cout << endl;
+    }
+}
+int main() {
+    printer p;
+    int t; // job id
+    int choice;
+    do {
+        cout << "\n--- Printer Spooler (Circular Queue) ---";
+        cout << "\n1. Add Print Job";
+        cout << "\n2. Process Print Job";
+        cout << "\n3. Display Queue";
+        cout << "\n4. Exit";
+        cout << "\nEnter your choice: ";
+        cin >> choice;
+        switch (choice) {
+        case 1:
+            cout << "\nEnter Print Job ID: ";
+            cin >> t;
+            p.Enqueue(t);
+            break;
+        case 2:
+            p.Dequeue();
+            break;
+        case 3:
+            p.Display();
+            break;
+        case 4:
+            cout << "\nExiting Printer Spooler...";
+            break;
+        default:
+            cout << "\nInvalid choice. Please try again.";
+        }
+    } while (choice != 4);
+    return 0;
+}
