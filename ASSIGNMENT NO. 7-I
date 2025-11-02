@@ -1,0 +1,42 @@
+/*Breadth First Search (BFS):
+Application:Indexing web pages for search engines.
+Example: A web crawler uses BFS to visit web pages systematically, starting from a seed URL and exploring links level by level. Nodes represent web pages. Edges represent hyperlinks. BFS ensures that pages at the same "depth" (distance from the starting page) are visited before moving to deeper levels. Write a program to simulate the indexing of web pages for a search engine using a Breadth-First Search (BFS) algorithm.*/
+
+PROGRAM:
+#include <iostream>
+using namespace std;
+void BFS(int graph[MAX][MAX], int start, int n) {
+    int visited[MAX] = {0};  
+    int queue[MAX];           
+    int front = 0, rear = 0;
+    visited[start] = 1;
+    queue[rear++] = start;
+    cout << "Order of indexing (web crawling): ";
+    while (front < rear) {
+        int current = queue[front++];
+        cout << "Page" << current << " ";
+        for (int i = 0; i < n; i++) {
+            if (graph[current][i] == 1 && visited[i] == 0) {
+                visited[i] = 1;
+                queue[rear++] = i;
+            }
+        }
+    }
+    cout << endl;
+}
+int main() {
+    int n;
+    int graph[MAX][MAX];
+    cout << "Enter number of web pages: ";
+    cin >> n;
+    cout << "\nEnter the link matrix (Adjacency Matrix):\n";
+    cout << "(1 means link exists, 0 means no link)\n";
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) { cin >> graph[i][j];  }
+    }
+    int start;
+    cout << "\nEnter the starting page (0 to " << n - 1 << "): ";
+    cin >> start;
+    BFS(graph, start, n);
+    return 0;
+}
